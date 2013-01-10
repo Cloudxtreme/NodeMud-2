@@ -1,15 +1,16 @@
 {
-    "author": "Damian Reeves",
-    "name": "NodeMud",
-    "version": "0.0.1",
-    "private": true,
-    "scripts": {
-        "start": "node app"
-    },
-    "dependencies": {
-        "express": "3.0.6",
-        "ejs": "*",
-        "socket.io": "~0.9.13",
-        "nconf": "~0.6.7"
-    }
+  "author": "Damian Reeves",
+  "name": "NodeMud",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "3.0.6",
+    "ejs": "*",
+    "socket.io": "~0.9.13",
+    "nconf": "~0.6.7",
+    "ejs-locals": "~1.0.2"
+  }
 }

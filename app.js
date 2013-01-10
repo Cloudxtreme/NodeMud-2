@@ -10,6 +10,7 @@ var fs = require('fs')
     , nconf = require('nconf')
     , sio = require('socket.io')
     , express = require('express')
+    , engine = require('ejs-locals')
     , path = require('path')
     , routes = require('./routes')
     , app = express()
@@ -24,8 +25,13 @@ nconf.argv()
 app.configure(function(){
     var port = nconf.get('port');
     app.set('port', port);
+
+    // use ejs-locals for all ejs templates:
+    app.engine('ejs', engine);
+
     app.set('views', __dirname + '/views');
     app.set('view engine', 'ejs');
+    //app.set("view options", {layout: true});
     app.use(express.favicon());
     app.use(express.logger('dev'));
     app.use(express.bodyParser());
@@ -39,6 +45,7 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
+//app.get('/user', routes.list);
 
 server.on('listening',function(){
     console.log('listening on port: '+ app.get('port'));
