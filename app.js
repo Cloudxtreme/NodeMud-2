@@ -10,6 +10,8 @@ var fs = require('fs')
     , nconf = require('nconf')
     , sio = require('socket.io')
     , express = require('express')
+    , path = require('path')
+    , routes = require('./routes')
     , app = express()
     , server = require('http').createServer(app)
     , io = sio.listen(server);
@@ -23,13 +25,20 @@ app.configure(function(){
     var port = nconf.get('port');
     app.set('port', port);
     app.set('views', __dirname + '/views');
+    app.set('view engine', 'ejs');
+    app.use(express.favicon());
+    app.use(express.logger('dev'));
+    app.use(express.bodyParser());
+    app.use(express.methodOverride());
+    app.use(app.router);
+    app.use(express.static(path.join(__dirname, 'public')));
 });
 
 app.configure('development', function(){
     app.use(express.errorHandler());
 });
 
-//app.get('/', routes.index);
+app.get('/', routes.index);
 
 server.on('listening',function(){
     console.log('listening on port: '+ app.get('port'));
