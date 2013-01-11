@@ -8,22 +8,24 @@
  */
 var fs = require('fs')
     , nconf = require('nconf')
-    , sio = require('socket.io')
     , express = require('express')
     , engine = require('ejs-locals')
     , path = require('path')
     , routes = require('./routes')
     , app = express()
     , server = require('http').createServer(app)
-    , io = sio.listen(server);
+    , io = require('socket.io').listen(server);
 
 // setup nconf to look at comandline, environment variables, then config.json
 nconf.argv()
      .env()
      .file({file: './config.json'});
 
-app.configure(function(){
-    var port = nconf.get('port');
+app.configure(function () {
+    var port = process.env.PORT; //nconf.get('port');
+    if (!port) {
+        port = nconf.get('port');
+    }
     app.set('port', port);
 
     // use ejs-locals for all ejs templates:
